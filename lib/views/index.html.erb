@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>sarcasm-codebreaker</title>
+    <link rel="stylesheet" href="/stylesheets/normalize.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/main.css" type="text/css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">SarCasm-CodeBreaker</a>
+        </div>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <section class="play">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Play a Game</h3>
+              </div>
+              <div class="panel-body">
+                <p>Select difficulty:</p>
+                <form action="/start_game">
+                  <div class="form-group">
+                    <select name="diff" class="form-control">
+                      <option value="easy">Easy</option>
+                      <option value="medium">Medium</option>
+                      <option value="hard">Hard</option>
+                      <option value="very_hard">Very Hard</option>
+                      <option value="mlg">MLG</option>
+                      <option value="gosu">GOSU</option>
+                    </select>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Play</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <h3 class="panel-title">Introducing Codebreaker</h3>
+              </div>
+              <div class="panel-body">
+                <p>
+  Codebreaker is a logic game in which a code-breaker tries to break a secret code created by a code-maker. The code-maker creates a secret code of four numbers between 1 and 6.
+  <br><br>
+  The code-breaker then gets some number of chances to break the code. In each turn, the code-breaker makes a guess of four numbers. The code-maker then marks the guess with up to four + and - signs.
+  <br><br>
+  A + indicates an exact match: one of the numbers in the guess is the same as one of the numbers in the secret code and in the same position.
+  <br><br>
+  A - indicates a number match: one of the numbers in the guess is the same as one of the numbers in the secret code but in a different position.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="leaderboards">
+      <div class="container">
+        <div class="row">
+          <h2>Leaderboards</h2>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Place</th>
+                <th>Nickname</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% leaderboards.each do |x| %>
+                <tr>
+                  <td><%= x[0] %>.</td>
+                  <td><%= x[1] %></td>
+                  <td><%= x[2] %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
