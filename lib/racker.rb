@@ -1,15 +1,9 @@
 require           'rack'
 require           'erb'
-require           'codebreaker'
 require           'yaml'
-require_relative  'app_helper'
-require_relative  'app_controller'
 
 class Racker
-  DB_PATH     = "db/records.yml"
   TMP_DB_PATH = "db/temp.yml"
-  PLAY_COOKIE = "play_story"
-
   def self.call(env)
     new(env).route.finish
   end
@@ -21,14 +15,7 @@ class Racker
   def route
     case @request.path
     when "/"            then index_page
-    when "/start_game"  then start_game
-    when "/play"        then play_page
-    when "/guess"       then guess
-    when "/hint"        then get_hint
-    when "/result"      then result_page
-    when "/record"      then save_record
     when "/temp"        then process_temperature
-    when "/temp_stat"   then show_temperatures
     else Rack::Response.new("Not Found", 404)
     end
   end
@@ -38,18 +25,24 @@ class Racker
     ERB.new(File.read(path)).result(binding)
   end
 
-  def clear_game_cookies(response)
-    response.delete_cookie(PLAY_COOKIE)
+  def index_page
+    Rack::Response.new(render("index.html.erb"))
   end
 
-  def add_play_cookie(response, add)
-    if @request.cookies[PLAY_COOKIE]
-      history = YAML.load(@request.cookies[PLAY_COOKIE])
-      history << add
-    else
-      history = [add]
+  def process_temperature
+    Rack::Response.new do |response|
+      temperature = @request.params["temp"]
+      db  = File.open(TMP_DB_PATH, 'a+')
+      to_load = [ Time.now, temperature ]
+      db.write(to_load.to_yaml)
+      db.close
     end
-    history = YAML.dump(history)
-    response.set_cookie(PLAY_COOKIE, history)
+  end
+
+  def temperatures
+    db = File.open(TMP_DB_PATH)
+    loaded = YAML.load_stream(db)
+    loaded.reverse!
+    loaded
   end
 end
