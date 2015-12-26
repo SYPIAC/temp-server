@@ -76,8 +76,6 @@ class Racker
   end
 
   def show_temperatures
-    Rack::Response.new do |response|
-      Rack::Response.new(render("temp_stat.html.erb"))
-    end
+    Rack::Response.new(render("temp_stat.html.erb"))
   end
 end
