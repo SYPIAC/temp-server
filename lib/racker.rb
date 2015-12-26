@@ -28,6 +28,7 @@ class Racker
     when "/result"      then result_page
     when "/record"      then save_record
     when "/temp"        then process_temperature
+    when "/temp_stat"   then show_temperatures
     else Rack::Response.new("Not Found", 404)
     end
   end

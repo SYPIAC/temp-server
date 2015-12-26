@@ -51,4 +51,11 @@ class Racker
     end
     place
   end
+
+  def temperatures
+    db = File.open(TMP_DB_PATH)
+    loaded = YAML.load_stream(db)
+    loaded.reverse!
+    loaded
+  end
 end

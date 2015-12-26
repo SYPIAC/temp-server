@@ -72,7 +72,12 @@ class Racker
       to_load = [ Time.now, temperature ]
       db.write(to_load.to_yaml)
       db.close
-      response.redirect("/")
+    end
+  end
+
+  def show_temperatures
+    Rack::Response.new do |response|
+      Rack::Response.new(render("temp_stat.html.erb"))
     end
   end
 end
