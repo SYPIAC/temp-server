@@ -68,7 +68,7 @@ class Racker
   def process_temperature
     Rack::Response.new do |response|
       temperature = @request.params["temp"]
-      db  = File.open(TMP_DB_PATH)
+      db  = File.open(TMP_DB_PATH, 'a+')
       to_load = [ Time.now, temperature ]
       db.write(to_load.to_yaml)
       db.close
